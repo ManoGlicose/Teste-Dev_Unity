@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Status")]
     public float health = 100;
+    float damageMultiplier = 1; // Se o jogador tiver pouca vida, ele receberá menos dano
 
     [Header("Movement")]
     public float speed = 4;
@@ -32,6 +33,9 @@ public class PlayerController : MonoBehaviour
     [Header("Animation")]
     [HideInInspector] public Animator anim;
     string currentState;
+
+    [Header("UI")]
+    public Image healthBar;
 
     const string IDLE = "player_idle";
     const string MOVE = "player_move";
@@ -61,6 +65,13 @@ public class PlayerController : MonoBehaviour
         Flip();
 
         transform.localScale = new Vector3(isFacingRight ? 1 : -1, 1, 1);
+
+        if (health <= 15) damageMultiplier = .75f;
+        else damageMultiplier = 1;
+
+        if (health <= 0) Death();
+
+        UIHandle();
     }
 
     private void FixedUpdate()
@@ -119,8 +130,18 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (health >= amount) health -= amount;
+        if (health >= amount) health -= (amount * damageMultiplier);
         else health = 0;
+    }
+
+    void Death()
+    {
+        gameObject.SetActive(false);
+    }
+
+    void UIHandle()
+    {
+        healthBar.fillAmount = health / 100;
     }
 
     #region Animation

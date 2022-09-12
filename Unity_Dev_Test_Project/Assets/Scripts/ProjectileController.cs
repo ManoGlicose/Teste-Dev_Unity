@@ -47,6 +47,7 @@ public class ProjectileController : MonoBehaviour
         {
             if (!isFromPlayer)
             {
+                collision.GetComponent<PlayerController>().TakeDamage(10);
                 print("HIT PLAYER");
                 Destroy(gameObject);
             }
