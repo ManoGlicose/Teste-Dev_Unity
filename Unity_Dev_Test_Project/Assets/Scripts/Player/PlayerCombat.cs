@@ -7,6 +7,7 @@ public class PlayerCombat : MonoBehaviour
     [Header("Components")]
     Controls controls;
     PlayerController player;
+    CameraControls cameraControls;
 
     [Space(15)]
     public Transform cane;
@@ -38,6 +39,7 @@ public class PlayerCombat : MonoBehaviour
     void Start()
     {
         player = GetComponent<PlayerController>();
+        cameraControls = FindObjectOfType<CameraControls>();
 
         fireRate = 1 / (rateOfFire / 60);
         fireTimer = fireRate;
@@ -53,6 +55,8 @@ public class PlayerCombat : MonoBehaviour
         fireRate = 1 / (rateOfFire / 60);
 
         if (fireTimer < fireRate) fireTimer += Time.deltaTime;
+
+        cameraControls.mousePosition = mousePosition;
     }
 
     void Aim()
@@ -76,6 +80,8 @@ public class PlayerCombat : MonoBehaviour
 
         fireTimer = 0;
     }
+
+    
 
     #region Enable/Disable Controls
     private void OnEnable()
