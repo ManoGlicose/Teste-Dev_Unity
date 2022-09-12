@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour
         Move();
         Aim();
 
-        if (target) Shoot();
+        if (target && Vector2.Distance(transform.position, target.position) < detectionRadius / 2) Shoot();
 
         fireRate = 1 / (rateOfFire / 60);
 
@@ -130,7 +130,9 @@ public class EnemyController : MonoBehaviour
 
     void Death()
     {
-        Destroy(gameObject);
+        FindObjectOfType<WavesController>().EnemyKilled();
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     #region Animation
