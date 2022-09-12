@@ -10,6 +10,8 @@ public class ProjectileController : MonoBehaviour
     [Header("Movement")]
     public float projectileSpeed = 18;
 
+    [HideInInspector] public bool isFromPlayer = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,5 +29,27 @@ public class ProjectileController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = transform.right * projectileSpeed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<EnemyController>())
+        {
+            if (isFromPlayer)
+            {
+                collision.GetComponent<EnemyController>().TakeDamage(20);
+                print("HIT ENEMY");
+                Destroy(gameObject);
+            }
+        }
+
+        if (collision.GetComponent<PlayerController>())
+        {
+            if (!isFromPlayer)
+            {
+                print("HIT PLAYER");
+                Destroy(gameObject);
+            }
+        }
     }
 }

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     Controls controls;
     Rigidbody2D rb;
+
+    [Header("Status")]
+    public float health = 100;
 
     [Header("Movement")]
     public float speed = 4;
@@ -113,10 +117,13 @@ public class PlayerController : MonoBehaviour
         canDash = true;
     }
 
-
+    public void TakeDamage(float amount)
+    {
+        if (health >= amount) health -= amount;
+        else health = 0;
+    }
 
     #region Animation
-
     public void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
@@ -125,7 +132,6 @@ public class PlayerController : MonoBehaviour
 
         currentState = newState;
     }
-
     #endregion
 
     #region Enable/Disable Controls

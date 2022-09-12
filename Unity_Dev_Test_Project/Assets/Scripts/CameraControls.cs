@@ -16,7 +16,7 @@ public class CameraControls : MonoBehaviour
     public LayerMask enemyLayer;
 
     [Header("Detect Targets")]
-    public Vector3 mousePosition;
+    [HideInInspector] public Vector3 mousePosition;
 
     Vector3 GetCenterPoint()
     {
@@ -83,12 +83,11 @@ public class CameraControls : MonoBehaviour
         Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(mousePosition).x, Camera.main.ScreenToWorldPoint(mousePosition).y);
         //RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f, enemyLayer);
 
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(rayPos, 1);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(rayPos, 1, enemyLayer);
 
         if (enemies.Length > 0)
         {
-            if(enemies[0].CompareTag("Enemy"))
-                enemy = enemies[0].transform;
+            enemy = enemies[0].transform;
         }
         else
             enemy = null;

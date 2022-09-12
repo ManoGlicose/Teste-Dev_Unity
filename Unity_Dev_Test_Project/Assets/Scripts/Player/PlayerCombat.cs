@@ -75,6 +75,7 @@ public class PlayerCombat : MonoBehaviour
         if (fireTimer < fireRate) return;
 
         GameObject projectile = Instantiate(projectilePrefab, nozzle.position, aimTransform.rotation);
+        projectile.GetComponent<ProjectileController>().isFromPlayer = true;
 
         caneAnim.Play("fire");
 
