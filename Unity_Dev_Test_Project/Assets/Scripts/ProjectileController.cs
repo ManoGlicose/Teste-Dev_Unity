@@ -4,34 +4,28 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    [Header("Components")]
+    [Header("Components")] // Componentes necessários para o funcionamento do script
     Rigidbody2D rb;
 
     [Header("Movement")]
-    public float projectileSpeed = 18;
+    public float projectileSpeed = 18; // A velocidade do projétil
 
-    [HideInInspector] public bool isFromPlayer = true;
+    [HideInInspector] public bool isFromPlayer = true; // Booleana que me diz se o projétil foi disparado pelo player ou não
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        Destroy(gameObject, 10);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Destroy(gameObject, 10); // Destrói o projétil depois de 10 segundos
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = transform.right * projectileSpeed;
+        rb.velocity = transform.right * projectileSpeed; // Move o projétil 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // Se encontrar o inimigo, aplica dano à ele. Mesma coisa com o player
     {
         if (collision.GetComponent<EnemyController>())
         {

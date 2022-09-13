@@ -12,15 +12,10 @@ public class MainMenuController : MonoBehaviour
     public Text waveText;
     public Text plantsText;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
+        // Define os textos com as informações do jogador se ele houver. Se não, insinua o jogador a ver os controles antes de começar
         if (PlayerPrefs.GetInt("MaxWave") > 0)
         {
             waveText.text = "ONDA MÁXIMA: " + PlayerPrefs.GetInt("MaxWave");
@@ -32,13 +27,13 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    public void StartGame()
+    public void StartGame() // Comerça a carregar a cena do jogo
     {
         menuCanvas.blocksRaycasts = false;
         StartCoroutine(StartButton());
     }
 
-    public void ShowHideControls(bool show)
+    public void ShowHideControls(bool show) // Mostra e esconde a tela com os controles
     {
         menuCanvas.alpha = show ? 0 : 1;
         menuCanvas.blocksRaycasts = !show;
@@ -47,12 +42,12 @@ public class MainMenuController : MonoBehaviour
         controlsCanvas.blocksRaycasts = show;
     }
 
-    public void ExitGame()
+    public void ExitGame() // Fecha o jogo
     {
         Application.Quit();
     }
 
-    IEnumerator StartButton()
+    IEnumerator StartButton() // Contagem para o início do jogo
     {
         yield return new WaitForSeconds(1);
 

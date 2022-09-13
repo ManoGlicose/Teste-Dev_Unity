@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class WavesController : MonoBehaviour
 {
+    // Enum que dita qual o estado da onda
     public enum State
     {
         Running,
@@ -13,11 +14,11 @@ public class WavesController : MonoBehaviour
 
     public State state;
 
-    [Header("Enemies")]
+    [Header("Enemies")] // Lista de inimigos e pontos de spawn
     public List<Transform> allEnemies = new List<Transform>();
     public List<Transform> spawnPoints = new List<Transform>();
 
-    [Header("Wave Info")]
+    [Header("Wave Info")] // Informaçóes da onda
     public bool started = false;
     bool canStart = true;
 
@@ -53,7 +54,7 @@ public class WavesController : MonoBehaviour
         enemiesText.text = enemiesRemaining.ToString() + " : INIMIGOS";
         #endregion
 
-        if (canStart)
+        if (canStart) // Se pode começar, então começa
         {
             if (!started)
             {
@@ -76,6 +77,7 @@ public class WavesController : MonoBehaviour
                 }
             }
 
+            // Quando todos os inimigos da onda são derrotados
             if (enemiesRemaining <= 0)
             {
                 if (!endOfWave)
@@ -84,23 +86,16 @@ public class WavesController : MonoBehaviour
         }
     }
 
-    void SpawnEnemy()
+    void SpawnEnemy() // Spawna o inimigo
     {
         print("Enemy spawned");
         GameObject currentEnemy = Instantiate(allEnemies[Random.Range(0, allEnemies.Count)].gameObject, spawnPoints[Random.Range(0, spawnPoints.Count)].position, Quaternion.identity, transform);
-
-        //currentEnemy.transform.position = new Vector3(Random.Range(spawnPoints[0].position.x - 15, spawnPoints[0].position.x + 15),
-        //    Random.Range(spawnPoints[0].position.y - 15, spawnPoints[0].position.y + 15),
-        //    Random.Range(spawnPoints[0].position.z - 15, spawnPoints[0].position.z + 15));
-
-        //currentEnemy.GetComponent<EnemyAIController>().accuracy = enemyAccuracy;
-        //currentEnemy.GetComponent<EnemyAIController>().shield = enemyShield;
 
         enemiesSpawned++;
         enemies++;
     }
 
-    void StartWave()
+    void StartWave() // Começa a primeira onda
     {
         waveIndex = 1;
 
@@ -110,7 +105,7 @@ public class WavesController : MonoBehaviour
         enemiesRemaining = enemySpawnAmount;
     }
 
-    void NextWave()
+    void NextWave() // Cria a próxima onda
     {
         waveIndex++;
 
@@ -120,23 +115,16 @@ public class WavesController : MonoBehaviour
         enemiesRemaining = enemySpawnAmount;
         state = State.Running;
 
-        //enemyAccuracy += .1f;
-        //if (waveIndex % 2 != 0)
-        //    enemyShield++;
-
         endOfWave = false;
     }
 
-    IEnumerator CallNextWave()
+    IEnumerator CallNextWave() // Contador para a onda seguinte
     {
         endOfWave = true;
 
         StartCoroutine(TypeText("Onda limpa!"));
-        //player.AddScore(10, "WAVE CREARED", true);
 
         state = State.Waiting;
-        //if (playerScore.timer > 0)
-        //    playerScore.timer = 3;
 
         yield return new WaitForSeconds(6);
 
@@ -152,7 +140,7 @@ public class WavesController : MonoBehaviour
         announcementText.text = "";
     }
 
-    void HighscoreWave()
+    void HighscoreWave() // Guarda a informação da onda mais distante que o jogador conseguiu
     {
         int highWave = PlayerPrefs.GetInt("MaxWave");
 
@@ -163,7 +151,7 @@ public class WavesController : MonoBehaviour
         }
     }
 
-    public void EnemyKilled()
+    public void EnemyKilled() // Remove o inimigo das contagens
     {
         enemies--;
         enemiesRemaining--;
@@ -173,7 +161,7 @@ public class WavesController : MonoBehaviour
         PlayerPrefs.SetInt("AllPlants", allPlants);
     }
 
-    IEnumerator TypeText(string sentence)
+    IEnumerator TypeText(string sentence) // Digita o texto dado letra por letra
     {
         announcementText.text = "";
         foreach (char letter in sentence.ToCharArray())
