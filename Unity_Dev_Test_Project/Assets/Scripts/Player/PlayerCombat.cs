@@ -25,6 +25,10 @@ public class PlayerCombat : MonoBehaviour
     [Header("Projectile")]
     public GameObject projectilePrefab;
 
+    [Header("Audio")]
+    public AudioSource source;
+    public AudioClip fireClip;
+
     private void Awake()
     {
         controls = new Controls();
@@ -78,6 +82,7 @@ public class PlayerCombat : MonoBehaviour
         projectile.GetComponent<ProjectileController>().isFromPlayer = true;
 
         caneAnim.Play("fire");
+        source.PlayOneShot(fireClip, .5f);
 
         fireTimer = 0;
     }

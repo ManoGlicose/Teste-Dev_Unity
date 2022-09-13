@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public CanvasGroup pauseScreen;
+    public CanvasGroup gameOverScreen;
 
     private void Awake()
     {
@@ -46,6 +47,15 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        Pause(false);
+        gameOverScreen.blocksRaycasts = false;
+        StartCoroutine(Quit());
+    }
+
+    IEnumerator Quit()
+    {
+        yield return new WaitForSecondsRealtime(1);
+
         SceneManager.LoadScene(0);
     }
 

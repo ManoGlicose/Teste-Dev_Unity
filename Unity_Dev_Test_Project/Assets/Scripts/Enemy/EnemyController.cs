@@ -37,6 +37,11 @@ public class EnemyController : MonoBehaviour
     float fireRate;
     float fireTimer;
 
+    [Header("Audio")]
+    public AudioClip fireClip;
+    public AudioClip faintClip; 
+    AudioSource source;
+
     const string IDLE = "idle";
     const string MOVE = "move";
 
@@ -45,6 +50,7 @@ public class EnemyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        source = GetComponent<AudioSource>();
 
         fireRate = 1 / (rateOfFire / 60);
         fireTimer = 0;
@@ -118,6 +124,7 @@ public class EnemyController : MonoBehaviour
         projectile.GetComponent<ProjectileController>().isFromPlayer = false;
 
         //caneAnim.Play("fire");
+        source.PlayOneShot(fireClip, .5f);
 
         fireTimer = 0;
     }
@@ -131,6 +138,7 @@ public class EnemyController : MonoBehaviour
     void Death()
     {
         FindObjectOfType<WavesController>().EnemyKilled();
+        GameObject.FindGameObjectWithTag("Respawn").GetComponent<AudioSource>().PlayOneShot(faintClip, .75f);
         gameObject.SetActive(false);
         //Destroy(gameObject);
     }

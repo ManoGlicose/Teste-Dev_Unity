@@ -34,7 +34,8 @@ public class MainMenuController : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        menuCanvas.blocksRaycasts = false;
+        StartCoroutine(StartButton());
     }
 
     public void ShowHideControls(bool show)
@@ -49,5 +50,12 @@ public class MainMenuController : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    IEnumerator StartButton()
+    {
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene(1);
     }
 }

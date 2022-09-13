@@ -38,6 +38,12 @@ public class PlayerController : MonoBehaviour
     public Image healthBar;
     public CanvasGroup gameOverScreen;
 
+    [Header("Audio")]
+    public AudioClip hurtClip;
+    public AudioClip faintClip;
+    public AudioClip flyByClip;
+    AudioSource source;
+
     const string IDLE = "player_idle";
     const string MOVE = "player_move";
 
@@ -58,6 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -118,6 +125,7 @@ public class PlayerController : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
         rb.velocity = direction * dashPower;
+        source.PlayOneShot(flyByClip);
 
         yield return new WaitForSeconds(dashTime);
 
@@ -131,8 +139,17 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (health >= amount) health -= (amount * damageMultiplier);
-        else health = 0;
+        if (health >= amount)
+        {
+            health -= (amount * damageMultiplier);
+            source.PlayOneShot(hurtClip, .5f);
+        }
+        else
+        {
+            health = 0;
+            GameObject.FindGameObjectWithTag("Respawn").GetComponent<AudioSource>().PlayOneShot(faintClip, .5f);
+            GameObject.FindGameObjectWithTag("Finish").GetComponent<AudioSource>().Stop();
+        }
     }
 
     void Death()

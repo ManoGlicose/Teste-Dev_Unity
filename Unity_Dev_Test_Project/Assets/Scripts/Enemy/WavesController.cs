@@ -87,7 +87,7 @@ public class WavesController : MonoBehaviour
     void SpawnEnemy()
     {
         print("Enemy spawned");
-        GameObject currentEnemy = Instantiate(allEnemies[0].gameObject, spawnPoints[Random.Range(0, spawnPoints.Count)].position, Quaternion.identity, transform);
+        GameObject currentEnemy = Instantiate(allEnemies[Random.Range(0, allEnemies.Count)].gameObject, spawnPoints[Random.Range(0, spawnPoints.Count)].position, Quaternion.identity, transform);
 
         //currentEnemy.transform.position = new Vector3(Random.Range(spawnPoints[0].position.x - 15, spawnPoints[0].position.x + 15),
         //    Random.Range(spawnPoints[0].position.y - 15, spawnPoints[0].position.y + 15),
