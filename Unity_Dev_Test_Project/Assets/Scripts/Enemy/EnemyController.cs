@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour
         Move();
         Aim();
 
-        if (target && Vector2.Distance(transform.position, target.position) < detectionRadius / 2) Shoot();
+        if (target && Vector2.Distance(transform.position, target.position) < 6) Shoot();
 
         fireRate = 1 / (rateOfFire / 60);
 

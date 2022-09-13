@@ -159,12 +159,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   target: {fileID: 0}
-  detectionRadius: 10
+  detectionRadius: 1000
   safeDistance: 3
   anim: {fileID: 0}
   projectilePrefab: {fileID: 8760904319391765757, guid: 9f46324f48192b54293457462795bc4d, type: 3}
   muzzle: {fileID: 761371010441259671}
-  rateOfFire: 80
+  rateOfFire: 50
 --- !u!70 &761371009760042700
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

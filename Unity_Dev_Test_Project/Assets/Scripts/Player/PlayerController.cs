@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI")]
     public Image healthBar;
+    public CanvasGroup gameOverScreen;
 
     const string IDLE = "player_idle";
     const string MOVE = "player_move";
@@ -136,6 +137,9 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
+        gameOverScreen.alpha = 1;
+        gameOverScreen.blocksRaycasts = true;
+
         gameObject.SetActive(false);
     }
 

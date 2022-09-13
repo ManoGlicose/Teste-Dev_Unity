@@ -144,6 +144,7 @@ public class WavesController : MonoBehaviour
         StartCoroutine(TypeText("Nova onda chegou..."));
 
         NextWave();
+        HighscoreWave();
 
         yield return new WaitForSeconds(3);
 
@@ -151,10 +152,25 @@ public class WavesController : MonoBehaviour
         announcementText.text = "";
     }
 
+    void HighscoreWave()
+    {
+        int highWave = PlayerPrefs.GetInt("MaxWave");
+
+        if (waveIndex > highWave)
+        {
+            highWave = waveIndex;
+            PlayerPrefs.SetInt("MaxWave", highWave);
+        }
+    }
+
     public void EnemyKilled()
     {
         enemies--;
         enemiesRemaining--;
+
+        int allPlants = PlayerPrefs.GetInt("AllPlants");
+        allPlants++;
+        PlayerPrefs.SetInt("AllPlants", allPlants);
     }
 
     IEnumerator TypeText(string sentence)
